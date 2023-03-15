@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
@@ -6,17 +8,20 @@ namespace Editor.NotUseNUnit
 {
     public static class TestRunner
     {
-        private static List<TestSuite> TestSuites { get; } = new List<TestSuite>
-        {
-            new CalculatorTestSuite(),
-        };
-        
         [MenuItem("Tools/Run Tests")]
         public static void Run()
         {
             Debug.Log("TestRunner.Run() started.");
-            foreach (var testSuite in TestSuites)
+            var types = Assembly.GetExecutingAssembly().GetTypes();
+            foreach (var type in types)
             {
+                var attributes = type.GetCustomAttributes(typeof(TestSuiteAttribute), false);
+                if (attributes.Length == 0)
+                {
+                    continue;
+                }
+            
+                var testSuite = (TestSuite) Activator.CreateInstance(type);
                 testSuite.Run();
             }
             Debug.Log("TestRunner.Run() finished.");

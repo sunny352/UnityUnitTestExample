@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Editor.NotUseNUnit
 {
+    [TestSuite]
     public class CalculatorTestSuite : TestSuite
     {
         private Calculator _calculator;
