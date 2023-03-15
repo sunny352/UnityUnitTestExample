@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-
 namespace Editor.NotUseNUnit
 {
     public class TestSuite
     {
-        protected virtual List<Action> Tests { get; }
-
         protected virtual void SetupSuite()
         {
         }
@@ -25,18 +20,20 @@ namespace Editor.NotUseNUnit
 
         public void Run()
         {
-            if (null == Tests)
-            {
-                throw new Exception("Tests is null");
-            }
-        
             SetupSuite();
-            foreach (var test in Tests)
+            var methods = GetType().GetMethods();
+            foreach (var methodInfo in methods)
             {
+                if (!methodInfo.Name.StartsWith("Test"))
+                {
+                    continue;
+                }
+                
                 SetupTest();
-                test();
+                methodInfo.Invoke(this, null);
                 TearDownTest();
             }
+            
             TearDownSuite();
         }
     }

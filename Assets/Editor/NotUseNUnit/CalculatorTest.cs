@@ -1,21 +1,9 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Editor.NotUseNUnit
 {
     public class CalculatorTestSuite : TestSuite
     {
-        protected override List<Action> Tests { get; } 
-        
-        public CalculatorTestSuite()
-        {
-            Tests = new List<Action>
-            {
-                TestAdd
-            };
-        }
-
         private Calculator _calculator;
 
         protected override void SetupSuite()
@@ -40,7 +28,7 @@ namespace Editor.NotUseNUnit
             Debug.Log("CalculatorTestSuite.TearDownTest()");
         }
 
-        private void TestAdd()
+        public void TestAdd()
         {
             Debug.Log("CalculatorTestSuite.TestAdd()");
             var result = _calculator.Add(1, 2);
