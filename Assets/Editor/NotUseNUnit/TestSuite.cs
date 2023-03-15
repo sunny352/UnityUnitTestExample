@@ -24,7 +24,8 @@ namespace Editor.NotUseNUnit
             var methods = GetType().GetMethods();
             foreach (var methodInfo in methods)
             {
-                if (!methodInfo.Name.StartsWith("Test"))
+                var attributes = methodInfo.GetCustomAttributes(typeof(TestAttribute), false);
+                if (attributes.Length == 0)
                 {
                     continue;
                 }

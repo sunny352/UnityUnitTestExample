@@ -28,6 +28,7 @@ namespace Editor.NotUseNUnit
             Debug.Log("CalculatorTestSuite.TearDownTest()");
         }
 
+        [Test]
         public void TestAdd()
         {
             Debug.Log("CalculatorTestSuite.TestAdd()");
