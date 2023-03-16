@@ -1,0 +1,12 @@
+stages:
+  - test
+
+test:
+  stage: test
+  resource_group: client
+  script: 
+    - $UNITY_APP -runTests -batchmode -nographics -projectPath -junit result.xml
+  artifacts:
+    reports:
+      junit: result.xml
+    expire_in: 1 mos
